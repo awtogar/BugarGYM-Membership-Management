@@ -1,17 +1,11 @@
--- ========================================================
--- Automatic Holiday Compensation Trigger & Function
--- ========================================================
-
--- Function: Automatically extend active members' due dates when a holiday is added
+-- Automatically extend active members' due dates when a holiday is added
 CREATE OR REPLACE FUNCTION apply_holiday_compensation()
 RETURNS TRIGGER AS $$
 DECLARE
     holiday_days INTEGER;
 BEGIN
-    -- Calculate total holiday days (end_date - start_date + 1)
     holiday_days := (NEW.end_date - NEW.start_date + 1);
 
-    -- Extend active members' due dates and add to extended_days counter
     UPDATE public.members
     SET 
         tanggal_jatuh_tempo = tanggal_jatuh_tempo + holiday_days,
@@ -23,7 +17,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Trigger: Fires AFTER INSERT on public.holidays
+-- Trigger to execute compensation on new holiday inserts
 DROP TRIGGER IF EXISTS trigger_apply_holiday_compensation ON public.holidays;
 
 CREATE TRIGGER trigger_apply_holiday_compensation

@@ -1,17 +1,13 @@
--- ========================================================
--- Gym Management System - Initial Database Schema & RLS
--- ========================================================
+-- Schema definition for Gym Management System
 
--- 1. ENUM TYPES
+-- ENUMS
 CREATE TYPE tipe_tarif_enum AS ENUM ('pelajar', 'karyawan');
 CREATE TYPE status_member_enum AS ENUM ('aktif', 'akan_habis', 'expired', 'suspend');
 CREATE TYPE tipe_pengunjung_enum AS ENUM ('member', 'non-member');
 CREATE TYPE status_bayar_enum AS ENUM ('lunas', 'belum_bayar');
 CREATE TYPE metode_bayar_enum AS ENUM ('qris', 'tunai');
 
--- 2. TABLES
-
--- Table: members
+-- TABLES
 CREATE TABLE public.members (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     nama TEXT NOT NULL,
@@ -27,7 +23,6 @@ CREATE TABLE public.members (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Table: checkins
 CREATE TABLE public.checkins (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     nama TEXT NOT NULL,
@@ -40,7 +35,6 @@ CREATE TABLE public.checkins (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Table: payments
 CREATE TABLE public.payments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     member_id UUID NOT NULL REFERENCES public.members(id) ON DELETE CASCADE,
@@ -51,7 +45,6 @@ CREATE TABLE public.payments (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Table: holidays
 CREATE TABLE public.holidays (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
@@ -61,14 +54,13 @@ CREATE TABLE public.holidays (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. ROW LEVEL SECURITY (RLS) POLICIES
-
+-- RLS POLICIES
 ALTER TABLE public.members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.checkins ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.holidays ENABLE ROW LEVEL SECURITY;
 
--- Allow authenticated admin users full access to all tables
+-- Admin access policies
 CREATE POLICY "Admin full access on members" ON public.members
     FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
@@ -81,7 +73,7 @@ CREATE POLICY "Admin full access on payments" ON public.payments
 CREATE POLICY "Admin full access on holidays" ON public.holidays
     FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
--- 4. STORAGE BUCKET FOR SIGNATURES
+-- Storage bucket configurations
 INSERT INTO storage.buckets (id, name, public) 
 VALUES ('signatures', 'signatures', true)
 ON CONFLICT (id) DO NOTHING;
