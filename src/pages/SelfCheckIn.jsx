@@ -15,20 +15,18 @@ import {
 } from '@remixicon/react'
 
 export default function SelfCheckIn() {
-  const [activeTab, setActiveTab] = useState('member') // 'member' | 'non-member'
+  const [activeTab, setActiveTab] = useState('member')
 
-  // Member Self Check-in State
   const [memberCode, setMemberCode] = useState('')
 
-  // Non-member State
   const [nonMemberName, setNonMemberName] = useState('')
   const [showSignature, setShowSignature] = useState(false)
   const sigCanvasRef = useRef(null)
 
   const [submitting, setSubmitting] = useState(false)
-  const [result, setResult] = useState(null) // { type: 'success' | 'warning' | 'error', title, text }
+  const [result, setResult] = useState(null)
 
-  // Auto-reset success message after 4 seconds
+  // Auto-reset success message after 15 seconds as a fallback
   useEffect(() => {
     if (result && result.type === 'success') {
       const timer = setTimeout(() => {
@@ -36,12 +34,11 @@ export default function SelfCheckIn() {
         setMemberCode('')
         setNonMemberName('')
         setShowSignature(false)
-      }, 4000)
+      }, 15000)
       return () => clearTimeout(timer)
     }
   }, [result])
 
-  // Handle Member Self Check-in by Unique Code
   const handleMemberSubmit = async (e) => {
     e.preventDefault()
     const cleanCode = memberCode.trim().toUpperCase()
@@ -106,7 +103,6 @@ export default function SelfCheckIn() {
         return
       }
 
-      // 3. Record check-in
       const { error: insertError } = await supabase.from('checkins').insert([
         {
           nama: member.nama,
@@ -148,7 +144,6 @@ export default function SelfCheckIn() {
     }
   }
 
-  // Handle Non-Member Self Check-in
   const handleNonMemberSubmit = async (e) => {
     e.preventDefault()
 
@@ -255,17 +250,15 @@ export default function SelfCheckIn() {
             </button>
           </div>
 
-          {/* Feedback Screen */}
-          {result && (
+          {/* Feedback Screen (Warnings and Errors) */}
+          {result && result.type !== 'success' && (
             <div
-              className={`mb-6 p-6 rounded-lg border flex flex-col items-center text-center animate-fade-in ${result.type === 'success'
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-                : result.type === 'warning'
+              className={`mb-6 p-6 rounded-lg border flex flex-col items-center text-center animate-fade-in ${
+                result.type === 'warning'
                   ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
                   : 'bg-red-500/10 border-red-500/30 text-red-300'
-                }`}
+              }`}
             >
-              {result.type === 'success' && <RiCheckboxCircleLine className="w-12 h-12 mb-2 text-emerald-400" />}
               {result.type === 'warning' && <RiErrorWarningLine className="w-12 h-12 mb-2 text-amber-400" />}
               {result.type === 'error' && <RiCloseCircleLine className="w-12 h-12 mb-2 text-red-400" />}
 
@@ -377,6 +370,37 @@ export default function SelfCheckIn() {
       <footer className="text-center py-4 text-xs text-muted-soft">
         Bugar Gym straight up healthy
       </footer>
+
+      {/* Success Modal Pop-up */}
+      {result && result.type === 'success' && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-surface-elevated border border-white/10 rounded-xl max-w-md w-full p-6 shadow-2xl relative text-center flex flex-col items-center font-inter animate-fade-in">
+            <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 mb-4">
+              <RiCheckboxCircleLine className="w-12 h-12" />
+            </div>
+            
+            <h3 className="text-xl font-bold text-white mb-2 font-geist uppercase tracking-wide">
+              {result.title}
+            </h3>
+            
+            <p className="text-xs text-muted leading-relaxed mb-6 max-w-xs font-mono">
+              {result.text}
+            </p>
+
+            <button
+              onClick={() => {
+                setResult(null)
+                setMemberCode('')
+                setNonMemberName('')
+                setShowSignature(false)
+              }}
+              className="w-full bg-white hover:bg-[#e5e5e5] text-canvas font-bold py-2.5 rounded-lg transition-all shadow-md cursor-pointer font-geist uppercase tracking-wider text-xs"
+            >
+              Selesai & Tutup
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

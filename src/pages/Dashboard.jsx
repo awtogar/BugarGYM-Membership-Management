@@ -39,14 +39,12 @@ export default function Dashboard() {
       const h3Date = new Date()
       h3Date.setDate(h3Date.getDate() + 3)
 
-      // 1. Today Checkins
       const { data: checkins } = await supabase
         .from('checkins')
         .select('*')
         .gte('waktu_checkin', startOfDay.toISOString())
         .order('waktu_checkin', { ascending: false })
 
-      // 2. Active & Expiring Members
       const { data: activeMembers } = await supabase
         .from('members')
         .select('*')
@@ -58,13 +56,11 @@ export default function Dashboard() {
         .lte('tanggal_jatuh_tempo', h3Date.toISOString().split('T')[0])
         .gte('tanggal_jatuh_tempo', new Date().toISOString().split('T')[0])
 
-      // 3. Month Payments
       const { data: monthPayments } = await supabase
         .from('payments')
         .select('jumlah')
         .gte('tanggal_bayar', startOfMonth.toISOString().split('T')[0])
 
-      // 4. Today Payments
       const { data: todayPayments } = await supabase
         .from('payments')
         .select('jumlah')

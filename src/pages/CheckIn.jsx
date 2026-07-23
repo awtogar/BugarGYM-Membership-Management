@@ -17,7 +17,7 @@ import {
 } from '@remixicon/react'
 
 export default function CheckIn() {
-  const [visitorType, setVisitorType] = useState('non-member') // 'member' | 'non-member'
+  const [visitorType, setVisitorType] = useState('non-member')
   const [visitorName, setVisitorName] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedMember, setSelectedMember] = useState(null)
@@ -33,7 +33,6 @@ export default function CheckIn() {
 
   const sigCanvasRef = useRef(null)
 
-  // Fetch today's check-in list
   const fetchTodayCheckins = async () => {
     setLoadingList(true)
     const startOfDay = new Date()
@@ -55,7 +54,6 @@ export default function CheckIn() {
     fetchTodayCheckins()
   }, [])
 
-  // Search members by name or phone or unique_code
   useEffect(() => {
     if (visitorType !== 'member' || searchQuery.trim().length < 2) {
       setMemberSearchResults([])
@@ -137,7 +135,6 @@ export default function CheckIn() {
 
       let signatureUrl = null
 
-      // Upload signature if drawn
       if (showSignature && sigCanvasRef.current && !sigCanvasRef.current.isEmpty()) {
         const dataUrl = sigCanvasRef.current.toDataURL('image/png')
         const blob = await (await fetch(dataUrl)).blob()
@@ -155,7 +152,6 @@ export default function CheckIn() {
         }
       }
 
-      // Insert check-in record
       const checkinPayload = {
         nama: visitorName,
         tipe: visitorType,
@@ -182,14 +178,12 @@ export default function CheckIn() {
 
       setMessage({ type: 'success', text: `Check-in ${visitorName} berhasil dicatat!` })
 
-      // Reset form
       setVisitorName('')
       setSelectedMember(null)
       setSearchQuery('')
       setShowSignature(false)
       if (sigCanvasRef.current) sigCanvasRef.current.clear()
 
-      // Refresh check-in list
       fetchTodayCheckins()
     } catch (err) {
       console.error('Check-in error:', err)

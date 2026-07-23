@@ -23,7 +23,6 @@ export default function Holidays() {
     end_date: '',
   })
 
-  // Calculate live total days
   const calculateTotalDays = () => {
     if (!form.start_date || !form.end_date) return 0
     const start = new Date(form.start_date)
@@ -68,7 +67,6 @@ export default function Holidays() {
     setMessage(null)
 
     try {
-      // Insert holiday record
       const { data: newHoliday, error: insertError } = await supabase
         .from('holidays')
         .insert([

@@ -26,7 +26,6 @@ export default function Members() {
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   
-  // Modals state
   const [showAddModal, setShowAddModal] = useState(false)
   const [showRenewModal, setShowRenewModal] = useState(false)
   const [showDetailModal, setShowDetailModal] = useState(false)
@@ -37,14 +36,13 @@ export default function Members() {
     checkins: [],
     holidays: [],
   })
-  const [detailTab, setDetailTab] = useState('payments') // 'payments' | 'checkins' | 'holidays'
+  const [detailTab, setDetailTab] = useState('payments')
   const [loadingDetail, setLoadingDetail] = useState(false)
 
   const [metodeBayar, setMetodeBayar] = useState('qris')
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState(null)
 
-  // New member form state
   const [newMember, setNewMember] = useState({
     nama: '',
     no_hp: '',
@@ -52,7 +50,6 @@ export default function Members() {
     tipe_tarif: 'pelajar',
   })
 
-  // Fetch members list
   const fetchMembers = async () => {
     setLoading(true)
     let query = supabase.from('members').select('*').order('created_at', { ascending: false })
@@ -77,7 +74,6 @@ export default function Members() {
     fetchMembers()
   }, [search, statusFilter])
 
-  // Open Member Detail Modal and fetch logs
   const handleOpenDetail = async (member) => {
     setSelectedMember(member)
     setShowDetailModal(true)
@@ -114,7 +110,6 @@ export default function Members() {
     }
   }
 
-  // Handle Add New Member
   const handleAddMember = async (e) => {
     e.preventDefault()
     setSubmitting(true)
@@ -142,7 +137,6 @@ export default function Members() {
       const { data, error } = await supabase.from('members').insert([payload]).select().single()
       if (error) throw error
 
-      // Record first payment
       const price = newMember.tipe_tarif === 'pelajar' ? 130000 : 150000
       await supabase.from('payments').insert([
         {
@@ -168,7 +162,6 @@ export default function Members() {
     }
   }
 
-  // Handle Membership Renewal
   const handleRenewMember = async (e) => {
     e.preventDefault()
     if (!selectedMember) return
@@ -223,7 +216,6 @@ export default function Members() {
     }
   }
 
-  // Suspend Member
   const handleSuspendMember = async (member) => {
     const confirm = window.confirm(`Apakah Anda yakin ingin me-suspend member ${member.nama}?`)
     if (!confirm) return

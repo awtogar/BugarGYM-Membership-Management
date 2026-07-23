@@ -115,8 +115,8 @@ export default function Login() {
       {/* dummy banner, remove after development */}
       <div className="max-w-md w-full p-4 bg-surface-card/70 justify-center items-center text-center backdrop-blur-md5 rounded-lg text-xs font-mono text-white">
         <p className="font-semibold uppercase tracking-wider text-[10px] mb-1 text-white">Dummy Account (Testing)</p>
-        <p>Email: bugargym@gmail.com</p>
-        <p>Password: bugar123</p>
+        <p>Email: admin@bugargym.com</p>
+        <p>Password: bugar000</p>
       </div>
     </div>
   )

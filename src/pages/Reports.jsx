@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import * as XLSX from "xlsx";
+import XLSX from "xlsx-js-style";
 import { supabase } from "../lib/supabase";
 import Navbar from "../components/Navbar";
 import { RiFileExcelLine } from "@remixicon/react";
 
 export default function Reports() {
-  const [filterType, setFilterType] = useState("today"); // 'today' | 'week' | 'month' | 'custom'
+  const [filterType, setFilterType] = useState("today");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [checkinsData, setCheckinsData] = useState([]);
   const [paymentsData, setPaymentsData] = useState([]);
-  const [activeTab, setActiveTab] = useState("checkins"); // 'checkins' | 'payments'
+  const [activeTab, setActiveTab] = useState("checkins");
   const [loading, setLoading] = useState(true);
 
   const fetchReports = async () => {
@@ -33,7 +33,6 @@ export default function Reports() {
       end.setHours(23, 59, 59, 999);
     }
 
-    // Fetch Checkins
     const { data: checkins } = await supabase
       .from("checkins")
       .select("*")
@@ -41,7 +40,6 @@ export default function Reports() {
       .lte("waktu_checkin", end.toISOString())
       .order("waktu_checkin", { ascending: false });
 
-    // Fetch Payments
     const { data: payments } = await supabase
       .from("payments")
       .select("*, members(nama, tipe_tarif)")
@@ -60,43 +58,212 @@ export default function Reports() {
 
   // Export to Excel using SheetJS
   const exportToExcel = () => {
+    const todayStr = new Date().toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    });
+
     if (activeTab === "checkins") {
       const formattedCheckins = checkinsData.map((item, index) => ({
         No: index + 1,
         "Waktu Check-in": new Date(item.waktu_checkin).toLocaleString("id-ID"),
         Nama: item.nama,
-        Tipe: item.tipe,
-        "Status Bayar": item.status_bayar,
+        Tipe: item.tipe === 'member' ? 'Member Active' : 'Non-Member (Harian)',
+        "Status Bayar": item.status_bayar === 'lunas' ? 'Lunas' : 'Belum Bayar',
         "Jumlah Bayar (Rp)": item.jumlah_bayar || 0,
       }));
 
-      const worksheet = XLSX.utils.json_to_sheet(formattedCheckins);
+      const titleRows = [
+        ["BUGAR GYM - LAPORAN KUNJUNGAN CHECK-IN"],
+        [`Tanggal Cetak: ${todayStr} (Waktu Sistem)`],
+        [`Total Kunjungan: ${formattedCheckins.length} kali`],
+        []
+      ];
+
+      const worksheet = XLSX.utils.aoa_to_sheet(titleRows);
+      XLSX.utils.sheet_add_json(worksheet, formattedCheckins, { origin: "A5" });
+
+      const totalRevenue = checkinsData.reduce((sum, item) => sum + (item.jumlah_bayar || 0), 0);
+      const nextRow = 5 + formattedCheckins.length + 2;
+      XLSX.utils.sheet_add_aoa(worksheet, [
+        ["Total Pendapatan Check-in", "", "", "", "", totalRevenue]
+      ], { origin: `A${nextRow}` });
+
+      worksheet["!merges"] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 5 } },
+        { s: { r: nextRow - 1, c: 0 }, e: { r: nextRow - 1, c: 4 } }
+      ];
+
+      const range = XLSX.utils.decode_range(worksheet["!ref"]);
+      for (let R = range.s.r; R <= range.e.r; ++R) {
+        for (let C = range.s.c; C <= range.e.c; ++C) {
+          const cell_ref = XLSX.utils.encode_cell({ r: R, c: C });
+          const cell = worksheet[cell_ref];
+          if (!cell) continue;
+
+          if (R === 0) {
+            cell.s = {
+              font: { name: "Segoe UI", bold: true, sz: 14, color: { rgb: "FFFFFF" } },
+              fill: { fgColor: { rgb: "131313" } },
+              alignment: { horizontal: "center", vertical: "center" }
+            };
+          } else if (R === 1 || R === 2) {
+            cell.s = {
+              font: { name: "Segoe UI", italic: true, sz: 10, color: { rgb: "6B7280" } }
+            };
+          } else if (R === 4) {
+            cell.s = {
+              font: { name: "Segoe UI", bold: true, sz: 11, color: { rgb: "FFFFFF" } },
+              fill: { fgColor: { rgb: "262626" } },
+              alignment: { horizontal: "center", vertical: "center" },
+              border: {
+                top: { style: "thin", color: { rgb: "4B5563" } },
+                bottom: { style: "medium", color: { rgb: "111827" } }
+              }
+            };
+          } else if (R === nextRow - 1) {
+            cell.s = {
+              font: { name: "Segoe UI", bold: true, sz: 11, color: { rgb: "111827" } },
+              fill: { fgColor: { rgb: "F3F4F6" } },
+              alignment: { horizontal: C === 5 ? "right" : "left", vertical: "center" },
+              border: {
+                top: { style: "thin", color: { rgb: "D1D5DB" } },
+                bottom: { style: "double", color: { rgb: "111827" } }
+              }
+            };
+          } else if (R > 4) {
+            const isEven = R % 2 === 0;
+            cell.s = {
+              font: { name: "Segoe UI", sz: 10 },
+              fill: { fgColor: { rgb: isEven ? "F9FAFB" : "FFFFFF" } },
+              alignment: {
+                horizontal: (C === 0 || C === 3 || C === 4) ? "center" : (C === 5 ? "right" : "left"),
+                vertical: "center"
+              },
+              border: {
+                bottom: { style: "thin", color: { rgb: "E5E7EB" } }
+              }
+            };
+          }
+        }
+      }
+
+      worksheet["!cols"] = [
+        { wch: 6 }, { wch: 22 }, { wch: 25 }, { wch: 22 }, { wch: 15 }, { wch: 22 }
+      ];
+
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Checkin");
-      XLSX.writeFile(
-        workbook,
-        `Laporan_Checkin_Gym_${new Date().toISOString().split("T")[0]}.xlsx`
-      );
+      XLSX.writeFile(workbook, `Laporan_Checkin_Gym_${new Date().toISOString().split("T")[0]}.xlsx`);
     } else {
       const formattedPayments = paymentsData.map((item, index) => ({
         No: index + 1,
         "Tanggal Bayar": item.tanggal_bayar,
         Member: item.members?.nama || "-",
-        Tarif: item.members?.tipe_tarif || "-",
+        Tarif: item.members?.tipe_tarif === 'pelajar' ? 'Pelajar/Mahasiswa' : 'Karyawan/Umum',
         Metode: item.metode.toUpperCase(),
         "Nominal (Rp)": item.jumlah || 0,
         "Berlaku Sampai": item.periode_berlaku_sampai,
       }));
 
-      const worksheet = XLSX.utils.json_to_sheet(formattedPayments);
+      const titleRows = [
+        ["BUGAR GYM - LAPORAN TRANSAKSI PEMBAYARAN MEMBERSHIP"],
+        [`Tanggal Cetak: ${todayStr} (Waktu Sistem)`],
+        [`Total Transaksi: ${formattedPayments.length} transaksi`],
+        []
+      ];
+
+      const worksheet = XLSX.utils.aoa_to_sheet(titleRows);
+
+      worksheet["!merges"] = [
+        { s: { r: 0, c: 0 }, e: { r: 0, c: 6 } }
+      ];
+
+      XLSX.utils.sheet_add_json(worksheet, formattedPayments, { origin: "A5" });
+
+      const totalIncome = paymentsData.reduce((sum, item) => sum + (item.jumlah || 0), 0);
+      const nextRow = 5 + formattedPayments.length + 2;
+      
+      XLSX.utils.sheet_add_aoa(worksheet, [
+        ["Total Pendapatan Membership", "", "", "", "", totalIncome, ""]
+      ], { origin: `A${nextRow}` });
+
+      worksheet["!merges"].push({
+        s: { r: nextRow - 1, c: 0 },
+        e: { r: nextRow - 1, c: 4 }
+      });
+
+      const range = XLSX.utils.decode_range(worksheet["!ref"]);
+      for (let R = range.s.r; R <= range.e.r; ++R) {
+        for (let C = range.s.c; C <= range.e.c; ++C) {
+          const cell_ref = XLSX.utils.encode_cell({ r: R, c: C });
+          const cell = worksheet[cell_ref];
+          if (!cell) continue;
+
+          if (R === 0) {
+            cell.s = {
+              font: { name: "Segoe UI", bold: true, sz: 14, color: { rgb: "FFFFFF" } },
+              fill: { fgColor: { rgb: "131313" } },
+              alignment: { horizontal: "center", vertical: "center" }
+            };
+          } else if (R === 1 || R === 2) {
+            cell.s = {
+              font: { name: "Segoe UI", italic: true, sz: 10, color: { rgb: "6B7280" } }
+            };
+          } else if (R === 4) {
+            cell.s = {
+              font: { name: "Segoe UI", bold: true, sz: 11, color: { rgb: "FFFFFF" } },
+              fill: { fgColor: { rgb: "262626" } },
+              alignment: { horizontal: "center", vertical: "center" },
+              border: {
+                top: { style: "thin", color: { rgb: "4B5563" } },
+                bottom: { style: "medium", color: { rgb: "111827" } }
+              }
+            };
+          } else if (R === nextRow - 1) {
+            cell.s = {
+              font: { name: "Segoe UI", bold: true, sz: 11, color: { rgb: "111827" } },
+              fill: { fgColor: { rgb: "F3F4F6" } },
+              alignment: { horizontal: C === 5 ? "right" : "left", vertical: "center" },
+              border: {
+                top: { style: "thin", color: { rgb: "D1D5DB" } },
+                bottom: { style: "double", color: { rgb: "111827" } }
+              }
+            };
+          } else if (R > 4) {
+            const isEven = R % 2 === 0;
+            cell.s = {
+              font: { name: "Segoe UI", sz: 10 },
+              fill: { fgColor: { rgb: isEven ? "F9FAFB" : "FFFFFF" } },
+              alignment: {
+                horizontal: (C === 0 || C === 4) ? "center" : (C === 5 ? "right" : "left"),
+                vertical: "center"
+              },
+              border: {
+                bottom: { style: "thin", color: { rgb: "E5E7EB" } }
+              }
+            };
+          }
+        }
+      }
+
+      worksheet["!cols"] = [
+        { wch: 6 },
+        { wch: 18 },
+        { wch: 25 },
+        { wch: 20 },
+        { wch: 12 },
+        { wch: 22 },
+        { wch: 18 },
+      ];
+
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Laporan Pembayaran");
-      XLSX.writeFile(
-        workbook,
-        `Laporan_Pembayaran_Gym_${new Date().toISOString().split("T")[0]}.xlsx`
-      );
+      XLSX.writeFile(workbook, `Laporan_Pembayaran_Gym_${new Date().toISOString().split("T")[0]}.xlsx`);
     }
   };
+
 
   const totalCheckinIncome = checkinsData.reduce(
     (acc, curr) => acc + (Number(curr.jumlah_bayar) || 0),
@@ -143,11 +310,10 @@ export default function Reports() {
               <button
                 key={f.id}
                 onClick={() => setFilterType(f.id)}
-                className={`px-3.5 py-2 rounded-lg text-[10px] font-bold font-geist uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
-                  filterType === f.id
-                    ? "bg-white text-canvas"
-                    : "bg-white/5 text-muted border border-white/8 hover:text-white"
-                }`}
+                className={`px-3.5 py-2 rounded-lg text-[10px] font-bold font-geist uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${filterType === f.id
+                  ? "bg-white text-canvas"
+                  : "bg-white/5 text-muted border border-white/8 hover:text-white"
+                  }`}
               >
                 {f.label}
               </button>
@@ -207,21 +373,19 @@ export default function Reports() {
         <div className="flex border-b border-white/8 mb-6">
           <button
             onClick={() => setActiveTab("checkins")}
-            className={`pb-3 px-4 font-bold text-[10px] font-geist uppercase tracking-wider transition-colors border-b-2 cursor-pointer ${
-              activeTab === "checkins"
-                ? "border-white text-white"
-                : "border-transparent text-muted hover:text-white"
-            }`}
+            className={`pb-3 px-4 font-bold text-[10px] font-geist uppercase tracking-wider transition-colors border-b-2 cursor-pointer ${activeTab === "checkins"
+              ? "border-white text-white"
+              : "border-transparent text-muted hover:text-white"
+              }`}
           >
             Kunjungan Check-in ({checkinsData.length})
           </button>
           <button
             onClick={() => setActiveTab("payments")}
-            className={`pb-3 px-4 font-bold text-[10px] font-geist uppercase tracking-wider transition-colors border-b-2 cursor-pointer ${
-              activeTab === "payments"
-                ? "border-white text-white"
-                : "border-transparent text-muted hover:text-white"
-            }`}
+            className={`pb-3 px-4 font-bold text-[10px] font-geist uppercase tracking-wider transition-colors border-b-2 cursor-pointer ${activeTab === "payments"
+              ? "border-white text-white"
+              : "border-transparent text-muted hover:text-white"
+              }`}
           >
             Transaksi Keanggotaan ({paymentsData.length})
           </button>
@@ -265,11 +429,10 @@ export default function Reports() {
                         </td>
                         <td className="px-6 py-4 capitalize">
                           <span
-                            className={`text-[9px] font-bold font-geist uppercase px-2.5 py-0.5 rounded border ${
-                              row.tipe === "member"
-                                ? "bg-white/10 text-white border-white/20"
-                                : "bg-white/5 text-muted border-white/10"
-                            }`}
+                            className={`text-[9px] font-bold font-geist uppercase px-2.5 py-0.5 rounded border ${row.tipe === "member"
+                              ? "bg-white/10 text-white border-white/20"
+                              : "bg-white/5 text-muted border-white/10"
+                              }`}
                           >
                             {row.tipe}
                           </span>

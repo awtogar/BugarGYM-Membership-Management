@@ -67,6 +67,9 @@ CREATE POLICY "Admin full access on members" ON public.members
 CREATE POLICY "Admin full access on checkins" ON public.checkins
     FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
+CREATE POLICY "Public insert checkins" ON public.checkins
+    FOR INSERT TO anon WITH CHECK (true);
+
 CREATE POLICY "Admin full access on payments" ON public.payments
     FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
@@ -80,3 +83,13 @@ ON CONFLICT (id) DO NOTHING;
 
 CREATE POLICY "Admin signatures upload policy" ON storage.objects
     FOR ALL TO authenticated USING (bucket_id = 'signatures') WITH CHECK (bucket_id = 'signatures');
+
+CREATE POLICY "Public signatures upload policy" ON storage.objects
+    FOR INSERT TO anon WITH CHECK (bucket_id = 'signatures');
+
+CREATE POLICY "Public signatures select policy" ON storage.objects
+    FOR SELECT TO anon USING (bucket_id = 'signatures');
+
+-- Allow public to select members by unique code for self check-in
+CREATE POLICY "Public select members" ON public.members
+    FOR SELECT TO anon USING (true);

@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useState } from 'react'
 import {
   RiPulseLine,
   RiDashboardLine,
@@ -8,12 +9,14 @@ import {
   RiCalendarEventLine,
   RiFileChartLine,
   RiLogoutBoxRLine,
-  RiUserLine,
+  RiMenuLine,
+  RiCloseLine,
 } from '@remixicon/react'
 
 export default function Navbar() {
   const location = useLocation()
-  const { user, logout } = useAuth()
+  const { logout } = useAuth()
+  const [isOpen, setIsOpen] = useState(false)
 
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: RiDashboardLine },
@@ -31,12 +34,12 @@ export default function Navbar() {
             <div className="p-2 bg-white/5 border border-white/10 rounded-lg text-white group-hover:bg-white/10 transition-colors">
               <RiPulseLine className="w-5 h-5" />
             </div>
-            <span className="font-geist font-extrabold text-base text-white tracking-tight uppercase">
+            <span className="font-geist font-extrabold text-base text-white tracking-tight uppercase whitespace-nowrap">
               BugarGym
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1.5">
+          <nav className="hidden lg:flex items-center gap-1.5">
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = location.pathname === item.path
@@ -57,21 +60,64 @@ export default function Navbar() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-2 text-ink text-xs font-mono px-3 py-1.5 rounded-lg bg-surface-lowest/50 border border-white/8">
-            <RiUserLine className="w-3.5 h-3.5 text-muted" />
-            <span>{user?.email}</span>
-          </div>
-
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={logout}
-            className="text-xs text-muted hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-lg border border-white/8 hover:bg-white/5 transition-colors cursor-pointer uppercase font-geist font-semibold tracking-wider"
+            className="hidden lg:flex text-xs text-muted hover:text-white items-center gap-1.5 px-3 py-2 rounded-lg border border-white/8 hover:bg-white/5 transition-colors cursor-pointer uppercase font-geist font-semibold tracking-wider"
           >
             <RiLogoutBoxRLine className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Logout</span>
+            <span>Logout</span>
+          </button>
+
+          {/* Hamburger Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden p-2 text-muted hover:text-white rounded-lg border border-white/8 hover:bg-white/5 transition-colors cursor-pointer"
+            aria-label="Toggle navigation menu"
+          >
+            {isOpen ? <RiCloseLine className="w-4 h-4" /> : <RiMenuLine className="w-4 h-4" />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu Panel */}
+      {isOpen && (
+        <div className="lg:hidden border-t border-white/8 bg-canvas/95 backdrop-blur-md px-4 py-3 space-y-2.5 animate-fade-in">
+          <div className="space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon
+              const isActive = location.pathname === item.path
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all font-geist ${isActive
+                    ? 'bg-white text-canvas shadow-md'
+                    : 'text-muted hover:text-white hover:bg-white/5'
+                    }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {item.name}
+                </Link>
+              )
+            })}
+          </div>
+
+          <div className="pt-2 border-t border-white/8">
+            <button
+              onClick={() => {
+                setIsOpen(false)
+                logout()
+              }}
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-xs font-semibold uppercase tracking-wider text-red-400 hover:text-red-300 hover:bg-red-500/5 border border-red-500/10 transition-all cursor-pointer font-geist"
+            >
+              <RiLogoutBoxRLine className="w-4 h-4" />
+              Logout
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   )
 }
