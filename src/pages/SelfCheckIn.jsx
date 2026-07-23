@@ -209,30 +209,30 @@ export default function SelfCheckIn() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between p-4 sm:p-6">
+    <div className="min-h-screen bg-canvas text-ink flex flex-col justify-between p-4 sm:p-6">
       {/* Header Branding */}
       <header className="max-w-xl mx-auto w-full text-center pt-4 pb-6">
-        <div className="inline-flex items-center justify-center p-3 bg-indigo-600/10 border border-indigo-500/20 rounded-2xl text-indigo-400 mb-3 shadow-xl">
+        <div className="inline-flex items-center justify-center p-3 bg-white/5 border border-white/10 rounded-lg text-white mb-3 shadow-xl">
           <RiPulseLine className="w-10 h-10 animate-pulse" />
         </div>
         <h1 className="text-3xl font-extrabold text-white tracking-tight">Self Check-in Gym</h1>
-        <p className="text-slate-400 text-sm mt-1">Masukkan kode member Anda untuk langsung latihan</p>
+        <p className="text-muted text-sm mt-1">Masukkan kode member Anda untuk langsung latihan</p>
       </header>
 
       {/* Main Form Container */}
       <main className="max-w-xl mx-auto w-full my-auto">
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div className="bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6 sm:p-8 shadow-2xl">
           {/* Tab Selector */}
-          <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-950 border border-slate-800 rounded-2xl mb-8">
+          <div className="grid grid-cols-2 gap-2 p-1.5 bg-surface-lowest border border-white/8 rounded-lg mb-8">
             <button
               type="button"
               onClick={() => {
                 setActiveTab('member')
                 setResult(null)
               }}
-              className={`py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 ${activeTab === 'member'
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-white'
+              className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 ${activeTab === 'member'
+                ? 'bg-white text-canvas shadow-lg'
+                : 'text-muted hover:text-white'
                 }`}
             >
               <RiQrCodeLine className="w-4 h-4" />
@@ -245,9 +245,9 @@ export default function SelfCheckIn() {
                 setActiveTab('non-member')
                 setResult(null)
               }}
-              className={`py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 ${activeTab === 'non-member'
-                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
-                : 'text-slate-400 hover:text-white'
+              className={`py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 ${activeTab === 'non-member'
+                ? 'bg-white text-canvas shadow-lg'
+                : 'text-muted hover:text-white'
                 }`}
             >
               <RiGroupLine className="w-4 h-4" />
@@ -258,7 +258,7 @@ export default function SelfCheckIn() {
           {/* Feedback Screen */}
           {result && (
             <div
-              className={`mb-6 p-6 rounded-2xl border flex flex-col items-center text-center animate-fade-in ${result.type === 'success'
+              className={`mb-6 p-6 rounded-lg border flex flex-col items-center text-center animate-fade-in ${result.type === 'success'
                 ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
                 : result.type === 'warning'
                   ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
@@ -278,7 +278,7 @@ export default function SelfCheckIn() {
           {activeTab === 'member' ? (
             <form onSubmit={handleMemberSubmit} className="space-y-6">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 text-center">
+                <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2 text-center">
                   Masukkan Kode Unik Member Anda
                 </label>
                 <input
@@ -288,9 +288,9 @@ export default function SelfCheckIn() {
                   value={memberCode}
                   onChange={(e) => setMemberCode(e.target.value.toUpperCase())}
                   placeholder="KODE (6 DIGIT)"
-                  className="w-full bg-slate-950 border-2 border-slate-800 focus:border-indigo-500 text-white rounded-2xl py-4 text-center font-mono font-bold text-2xl tracking-widest uppercase focus:outline-none transition-all placeholder:text-slate-700"
+                  className="w-full bg-surface-lowest border-2 border-white/8 focus:border-white/30 text-white rounded-lg py-3 text-center font-mono font-bold text-2xl tracking-widest uppercase focus:outline-none transition-all placeholder:text-neutral-600"
                 />
-                <p className="text-[11px] text-slate-500 text-center mt-2">
+                <p className="text-[11px] text-muted-soft text-center mt-2">
                   Kode dapat dilihat di kartu member atau ditanyakan ke meja admin.
                 </p>
               </div>
@@ -298,17 +298,17 @@ export default function SelfCheckIn() {
               <button
                 type="submit"
                 disabled={submitting || !memberCode.trim()}
-                className="w-full bg-indigo-600 hover:bg-amber-500 text-white font-bold py-4 rounded-2xl transition-all shadow-xl shadow-indigo-600/30 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer text-base"
+                className="w-full bg-white hover:bg-[#e5e5e5] text-canvas font-bold py-2.5 rounded-lg transition-all shadow-xl disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer text-xs font-geist uppercase tracking-wider"
               >
                 <span>{submitting ? 'Memverifikasi...' : 'Check-in Sekarang'}</span>
-                <RiArrowRightLine className="w-5 h-5" />
+                <RiArrowRightLine className="w-4 h-4" />
               </button>
             </form>
           ) : (
             /* Non-Member Self Checkin Form */
             <form onSubmit={handleNonMemberSubmit} className="space-y-6">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2">
                   Nama Lengkap Pengunjung
                 </label>
                 <input
@@ -317,15 +317,15 @@ export default function SelfCheckIn() {
                   value={nonMemberName}
                   onChange={(e) => setNonMemberName(e.target.value)}
                   placeholder="Ketik nama lengkap Anda..."
-                  className="w-full bg-slate-950 border border-slate-800 text-white rounded-2xl py-3 px-4 text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-surface-lowest border border-white/8 text-white rounded-lg py-2.5 px-4 text-sm focus:outline-none focus:border-white/30"
                 />
               </div>
 
               {/* Digital Signature */}
-              <div className="border border-slate-800 rounded-2xl p-4 bg-slate-950">
+              <div className="border border-white/8 rounded-lg p-4 bg-surface-lowest">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-                    <RiEditLine className="w-4 h-4 text-indigo-400" />
+                  <span className="text-xs font-semibold text-muted uppercase tracking-wider flex items-center gap-1.5">
+                    <RiEditLine className="w-4 h-4 text-white" />
                     Tanda Tangan Digital (Opsional)
                   </span>
 
@@ -333,7 +333,7 @@ export default function SelfCheckIn() {
                     <button
                       type="button"
                       onClick={() => sigCanvasRef.current?.clear()}
-                      className="text-xs text-slate-400 hover:text-white flex items-center gap-1 px-2.5 py-1 rounded-lg border border-slate-800"
+                      className="text-xs text-muted hover:text-white flex items-center gap-1 px-2.5 py-1 rounded-lg border border-white/8"
                     >
                       <RiRefreshLine className="w-3.5 h-3.5" /> Reset
                     </button>
@@ -341,32 +341,32 @@ export default function SelfCheckIn() {
                 </div>
 
                 {showSignature ? (
-                  <div className="border border-slate-800 rounded-xl overflow-hidden">
-                    <SignaturePad ref={sigCanvasRef} penColor="#000000" />
+                  <div className="border border-white/8 rounded-lg overflow-hidden">
+                    <SignaturePad ref={sigCanvasRef} penColor="#ffffff" />
                   </div>
                 ) : (
                   <button
                     type="button"
                     onClick={() => setShowSignature(true)}
-                    className="w-full py-3 border border-dashed border-slate-800 rounded-xl text-xs text-indigo-400 hover:bg-amber-500/10 transition-colors"
+                    className="w-full py-2.5 border border-dashed border-white/8 rounded-lg text-xs text-white hover:bg-white/5 transition-colors"
                   >
                     + Sentuh di sini untuk tanda tangan
                   </button>
                 )}
               </div>
 
-              <div className="p-4 bg-slate-950 border border-slate-800 rounded-2xl flex items-center justify-between text-xs">
-                <span className="text-slate-400 font-medium">Biaya Kunjungan Harian:</span>
+              <div className="p-4 bg-surface-lowest border border-white/8 rounded-lg flex items-center justify-between text-xs">
+                <span className="text-muted font-medium">Biaya Kunjungan Harian:</span>
                 <span className="font-bold text-white text-sm">Rp 15.000 (Bayar di Kasir)</span>
               </div>
 
               <button
                 type="submit"
                 disabled={submitting || !nonMemberName.trim()}
-                className="w-full bg-indigo-600 hover:bg-amber-500 text-white font-bold py-4 rounded-2xl transition-all shadow-xl shadow-indigo-600/30 disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer text-base"
+                className="w-full bg-white hover:bg-[#e5e5e5] text-canvas font-bold py-2.5 rounded-lg transition-all shadow-xl disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer text-xs font-geist uppercase tracking-wider"
               >
                 <span>{submitting ? 'Menyimpan...' : 'Submit Check-in'}</span>
-                <RiArrowRightLine className="w-5 h-5" />
+                <RiArrowRightLine className="w-4 h-4" />
               </button>
             </form>
           )}
@@ -374,7 +374,7 @@ export default function SelfCheckIn() {
       </main>
 
       {/* Footer Branding */}
-      <footer className="text-center py-4 text-xs text-slate-600">
+      <footer className="text-center py-4 text-xs text-muted-soft">
         Bugar Gym straight up healthy
       </footer>
     </div>

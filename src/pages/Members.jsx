@@ -242,21 +242,21 @@ export default function Members() {
   }
 
   return (
-    <div className="min-h-screen bg-[#131313] text-[#e5e2e1] flex flex-col font-inter">
+    <div className="min-h-screen bg-canvas text-ink flex flex-col font-inter">
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-extrabold text-white tracking-tight uppercase font-geist">Manajemen Membership</h1>
-            <p className="text-[#a1a1a1] text-xs font-inter mt-1">
+            <h1 className="text-2xl font-extrabold text-white tracking-tight uppercase font-geist">Database Anggota</h1>
+            <p className="text-muted text-xs font-inter mt-1">
               Kelola data pendaftaran, perpanjangan, dan kode unik self check-in anggota gym
             </p>
           </div>
 
           <button
             onClick={() => setShowAddModal(true)}
-            className="bg-white hover:bg-[#e5e5e5] text-[#131313] text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer font-geist uppercase tracking-wider"
+            className="bg-white hover:bg-[#e5e5e5] text-canvas text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer font-geist uppercase tracking-wider"
           >
             <RiUserAddLine className="w-4 h-4" />
             <span>Tambah Member Baru</span>
@@ -281,15 +281,15 @@ export default function Members() {
         )}
 
         {/* Filter & Search Bar */}
-        <div className="bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-4 mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
-          <div className="relative w-full sm:w-80">
+        <div className="bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-4 mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <div className="relative w-full sm:max-w-xs">
             <RiSearchLine className="w-4 h-4 text-neutral-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Cari nama, HP, atau kode..."
-              className="w-full bg-[#0e0e0e] border border-white/8 text-white rounded-lg py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-white/30 font-inter placeholder:text-neutral-600 transition-colors"
+              placeholder="Cari nama atau kode..."
+              className="w-full bg-surface-lowest border border-white/8 text-white rounded-lg py-2 pl-9 pr-4 text-sm focus:outline-none focus:border-white/30 font-inter placeholder:text-neutral-600 transition-colors"
             />
           </div>
 
@@ -300,8 +300,8 @@ export default function Members() {
                 onClick={() => setStatusFilter(status)}
                 className={`px-3 py-1.5 rounded-lg text-[10px] font-bold font-geist uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
                   statusFilter === status
-                    ? 'bg-white text-[#131313]'
-                    : 'bg-white/5 text-[#a1a1a1] border border-white/8 hover:text-white'
+                    ? 'bg-white text-canvas'
+                    : 'bg-white/5 text-muted border border-white/8 hover:text-white'
                 }`}
               >
                 {status === 'all' ? 'Semua' : status.replace('_', ' ')}
@@ -311,10 +311,10 @@ export default function Members() {
         </div>
 
         {/* Members Table */}
-        <div className="bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl overflow-hidden shadow-xl">
+        <div className="bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl overflow-hidden shadow-xl">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-[#0e0e0e] text-[#a1a1a1] text-[10px] font-bold uppercase tracking-wider border-b border-white/8">
+            <table className="w-full text-left border-collapse">
+              <thead className="bg-surface-lowest text-muted text-[10px] font-bold uppercase tracking-wider border-b border-white/8">
                 <tr>
                   <th className="px-6 py-4">Kode Unik</th>
                   <th className="px-6 py-4">Nama Member</th>
@@ -325,17 +325,17 @@ export default function Members() {
                   <th className="px-6 py-4 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 text-[#e5e2e1]">
+              <tbody className="divide-y divide-white/5 text-ink">
                 {loading ? (
                   <tr>
-                    <td colSpan="7" className="px-6 py-8 text-center text-[#a1a1a1] text-xs font-mono">
-                      Memuat data member...
+                    <td colSpan="7" className="px-6 py-8 text-center text-muted text-xs font-mono">
+                      Memuat data anggota...
                     </td>
                   </tr>
                 ) : members.length === 0 ? (
                   <tr>
-                    <td colSpan="7" className="px-6 py-8 text-center text-[#a1a1a1] text-xs font-mono">
-                      Tidak ada data member yang ditemukan.
+                    <td colSpan="7" className="px-6 py-8 text-center text-muted text-xs font-mono">
+                      Tidak ada anggota yang ditemukan.
                     </td>
                   </tr>
                 ) : (
@@ -354,13 +354,12 @@ export default function Members() {
                           {member.nama}
                         </button>
                       </td>
-                      <td className="px-6 py-4 capitalize">
-                        <span className="bg-[#0e0e0e] border border-white/8 px-2.5 py-1 rounded-md text-[10px] font-medium font-mono text-[#a1a1a1]">
-                          {member.tipe_tarif} (Rp{' '}
-                          {member.tipe_tarif === 'pelajar' ? '130.000' : '150.000'})
+                      <td className="px-6 py-4">
+                        <span className="bg-surface-lowest border border-white/8 px-2.5 py-1 rounded-md text-[10px] font-medium font-mono text-muted">
+                          {member.tipe_tarif}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-xs font-mono text-[#a1a1a1]">
+                      <td className="px-6 py-4 text-xs font-mono text-muted">
                         {member.no_hp && (
                           <div className="flex items-center gap-1.5">
                             <RiPhoneLine className="w-3.5 h-3.5 text-neutral-500" />
@@ -375,8 +374,8 @@ export default function Members() {
                         )}
                       </td>
                       <td className="px-6 py-4 text-xs font-medium font-mono">
-                        <div className="flex items-center gap-1.5">
-                          <RiCalendarEventLine className="w-3.5 h-3.5 text-[#a1a1a1]" />
+                        <div className="flex items-center gap-1">
+                          <RiCalendarEventLine className="w-3.5 h-3.5 text-muted" />
                           <span>{member.tanggal_jatuh_tempo || '-'}</span>
                         </div>
                       </td>
@@ -399,11 +398,11 @@ export default function Members() {
                         <div className="flex items-center justify-end gap-2">
                           <button
                             onClick={() => handleOpenDetail(member)}
-                            className="bg-[#0e0e0e] hover:bg-white/5 text-white border border-white/8 px-3 py-1.5 rounded-lg text-[10px] font-bold font-geist uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-colors"
+                            className="bg-surface-lowest hover:bg-white/5 text-white border border-white/8 px-3 py-1.5 rounded-lg text-[10px] font-bold font-geist uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-colors"
                             title="Lihat Detail & Log"
                           >
-                            <RiEyeLine className="w-3.5 h-3.5 text-white" />
-                            Log
+                            <RiEyeLine className="w-3.5 h-3.5" />
+                            <span>Logs</span>
                           </button>
 
                           <button
@@ -411,10 +410,10 @@ export default function Members() {
                               setSelectedMember(member)
                               setShowRenewModal(true)
                             }}
-                            className="bg-white hover:bg-[#e5e5e5] text-[#131313] px-3 py-1.5 rounded-lg text-[10px] font-bold font-geist uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-colors"
+                            className="bg-white hover:bg-[#e5e5e5] text-canvas px-3 py-1.5 rounded-lg text-[10px] font-bold font-geist uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-colors"
                           >
                             <RiRefreshLine className="w-3.5 h-3.5" />
-                            Perpanjang
+                            <span>Renew</span>
                           </button>
 
                           {member.status !== 'suspend' && (
@@ -440,7 +439,7 @@ export default function Members() {
       {/* Modal Member Detail & Activity Logs */}
       {showDetailModal && selectedMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="bg-[#201f1f] border border-white/10 rounded-xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col font-inter">
+          <div className="bg-surface-elevated border border-white/10 rounded-xl max-w-2xl w-full p-6 shadow-2xl relative max-h-[90vh] flex flex-col font-inter">
             {/* Modal Header */}
             <div className="flex items-start justify-between pb-4 border-b border-white/8">
               <div>
@@ -449,22 +448,9 @@ export default function Members() {
                   <span className="font-mono font-bold text-white bg-white/10 border border-white/10 px-2.5 py-0.5 rounded-md text-[10px]">
                     KODE: {selectedMember.unique_code || '-'}
                   </span>
-                  <span
-                    className={`text-[9px] font-bold font-geist uppercase px-2.5 py-0.5 rounded-full border ${
-                      selectedMember.status === 'aktif'
-                        ? 'bg-white/10 text-white border-white/20'
-                        : selectedMember.status === 'akan_habis'
-                        ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                        : selectedMember.status === 'expired'
-                        ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                        : 'bg-white/5 border border-white/10 text-neutral-500'
-                    }`}
-                  >
-                    {selectedMember.status.replace('_', ' ')}
-                  </span>
                 </div>
-                <p className="text-xs text-[#a1a1a1] mt-1 font-mono">
-                  Tipe: <strong className="text-white capitalize font-normal">{selectedMember.tipe_tarif}</strong> | HP: {selectedMember.no_hp || '-'} | Email: {selectedMember.email || '-'}
+                <p className="text-xs text-muted mt-1 font-mono">
+                  Tipe: <strong className="text-white capitalize font-normal">{selectedMember.tipe_tarif}</strong> | HP: {selectedMember.no_hp || '-'}
                 </p>
               </div>
               <button
@@ -477,19 +463,19 @@ export default function Members() {
 
             {/* Member Quick Summary Cards */}
             <div className="grid grid-cols-3 gap-3 my-4">
-              <div className="p-3 bg-[#0e0e0e] border border-white/8 rounded-lg text-center">
-                <span className="text-[10px] text-[#a1a1a1] uppercase font-bold font-geist tracking-wide">Jatuh Tempo</span>
+              <div className="p-3 bg-surface-lowest border border-white/8 rounded-lg text-center">
+                <span className="text-[10px] text-muted uppercase font-bold font-geist tracking-wide">Jatuh Tempo</span>
                 <p className="font-bold text-white font-mono text-xs mt-0.5">{selectedMember.tanggal_jatuh_tempo || '-'}</p>
               </div>
 
-              <div className="p-3 bg-[#0e0e0e] border border-white/8 rounded-lg text-center">
-                <span className="text-[10px] text-[#a1a1a1] uppercase font-bold font-geist tracking-wide">Kompensasi</span>
+              <div className="p-3 bg-surface-lowest border border-white/8 rounded-lg text-center">
+                <span className="text-[10px] text-muted uppercase font-bold font-geist tracking-wide">Kompensasi</span>
                 <p className="font-bold text-white font-mono text-xs mt-0.5">+{selectedMember.extended_days || 0} Hari</p>
               </div>
 
-              <div className="p-3 bg-[#0e0e0e] border border-white/8 rounded-lg text-center">
-                <span className="text-[10px] text-[#a1a1a1] uppercase font-bold font-geist tracking-wide">Daftar</span>
-                <p className="font-bold text-[#a1a1a1] font-mono text-xs mt-0.5">{selectedMember.tanggal_daftar || '-'}</p>
+              <div className="p-3 bg-surface-lowest border border-white/8 rounded-lg text-center">
+                <span className="text-[10px] text-muted uppercase font-bold font-geist tracking-wide">Daftar</span>
+                <p className="font-bold text-muted font-mono text-xs mt-0.5">{selectedMember.tanggal_daftar || '-'}</p>
               </div>
             </div>
 
@@ -500,7 +486,7 @@ export default function Members() {
                 className={`pb-2.5 px-4 font-bold text-[10px] font-geist uppercase tracking-wider transition-colors border-b-2 cursor-pointer flex items-center gap-1.5 ${
                   detailTab === 'payments'
                     ? 'border-white text-white'
-                    : 'border-transparent text-[#a1a1a1] hover:text-white'
+                    : 'border-transparent text-muted hover:text-white'
                 }`}
               >
                 <RiBankCardLine className="w-3.5 h-3.5" />
@@ -512,7 +498,7 @@ export default function Members() {
                 className={`pb-2.5 px-4 font-bold text-[10px] font-geist uppercase tracking-wider transition-colors border-b-2 cursor-pointer flex items-center gap-1.5 ${
                   detailTab === 'checkins'
                     ? 'border-white text-white'
-                    : 'border-transparent text-[#a1a1a1] hover:text-white'
+                    : 'border-transparent text-muted hover:text-white'
                 }`}
               >
                 <RiTimeLine className="w-3.5 h-3.5" />
@@ -524,7 +510,7 @@ export default function Members() {
                 className={`pb-2.5 px-4 font-bold text-[10px] font-geist uppercase tracking-wider transition-colors border-b-2 cursor-pointer flex items-center gap-1.5 ${
                   detailTab === 'holidays'
                     ? 'border-white text-white'
-                    : 'border-transparent text-[#a1a1a1] hover:text-white'
+                    : 'border-transparent text-muted hover:text-white'
                 }`}
               >
                 <RiCalendarEventLine className="w-3.5 h-3.5" />
@@ -535,23 +521,23 @@ export default function Members() {
             {/* Tab Body Content */}
             <div className="flex-1 overflow-y-auto max-h-[300px] pr-1">
               {loadingDetail ? (
-                <div className="text-center py-8 text-[#a1a1a1] text-xs font-mono">Memuat log...</div>
+                <div className="text-center py-8 text-muted text-xs font-mono">Memuat log...</div>
               ) : detailTab === 'payments' ? (
                 memberDetailLogs.payments.length === 0 ? (
-                  <div className="text-center py-8 text-[#a1a1a1] text-xs font-mono">Belum ada riwayat perpanjangan.</div>
+                  <div className="text-center py-8 text-muted text-xs font-mono">Belum ada riwayat perpanjangan.</div>
                 ) : (
                   <div className="space-y-2.5">
                     {memberDetailLogs.payments.map((p) => (
-                      <div key={p.id} className="p-3 bg-[#0e0e0e] border border-white/8 rounded-lg flex items-center justify-between text-xs font-inter">
+                      <div key={p.id} className="p-3 bg-surface-lowest border border-white/8 rounded-lg flex items-center justify-between text-xs font-inter">
                         <div>
                           <p className="font-geist font-bold text-white uppercase tracking-wide text-[11px]">Perpanjangan Membership</p>
-                          <p className="text-[#a1a1a1] font-mono text-[10px] mt-0.5">
+                          <p className="text-muted font-mono text-[10px] mt-0.5">
                             Tgl: {p.tanggal_bayar} | Metode: <span className="uppercase text-white">{p.metode}</span>
                           </p>
                         </div>
                         <div className="text-right">
                           <span className="font-bold text-white font-mono">Rp {Number(p.jumlah).toLocaleString('id-ID')}</span>
-                          <p className="text-[9px] text-[#a1a1a1] font-mono mt-0.5">S/D {p.periode_berlaku_sampai}</p>
+                          <p className="text-[9px] text-muted font-mono mt-0.5">S/D {p.periode_berlaku_sampai}</p>
                         </div>
                       </div>
                     ))}
@@ -559,14 +545,14 @@ export default function Members() {
                 )
               ) : detailTab === 'checkins' ? (
                 memberDetailLogs.checkins.length === 0 ? (
-                  <div className="text-center py-8 text-[#a1a1a1] text-xs font-mono">Belum ada riwayat kunjungan.</div>
+                  <div className="text-center py-8 text-muted text-xs font-mono">Belum ada riwayat kunjungan.</div>
                 ) : (
                   <div className="space-y-2.5">
                     {memberDetailLogs.checkins.map((c) => (
-                      <div key={c.id} className="p-3 bg-[#0e0e0e] border border-white/8 rounded-lg flex items-center justify-between text-xs font-inter">
+                      <div key={c.id} className="p-3 bg-surface-lowest border border-white/8 rounded-lg flex items-center justify-between text-xs font-inter">
                         <div>
                           <p className="font-geist font-bold text-white uppercase tracking-wide text-[11px]">Kunjungan Gym</p>
-                          <p className="text-[#a1a1a1] font-mono text-[10px] mt-0.5">
+                          <p className="text-muted font-mono text-[10px] mt-0.5">
                             Waktu: {new Date(c.waktu_checkin).toLocaleString('id-ID')}
                           </p>
                         </div>
@@ -584,14 +570,14 @@ export default function Members() {
                 )
               ) : (
                 memberDetailLogs.holidays.length === 0 ? (
-                  <div className="text-center py-8 text-[#a1a1a1] text-xs font-mono">Belum ada kompensasi hari libur.</div>
+                  <div className="text-center py-8 text-muted text-xs font-mono">Belum ada kompensasi hari libur.</div>
                 ) : (
                   <div className="space-y-2.5">
                     {memberDetailLogs.holidays.map((h) => (
-                      <div key={h.id} className="p-3 bg-[#0e0e0e] border border-white/8 rounded-lg flex items-center justify-between text-xs font-inter">
+                      <div key={h.id} className="p-3 bg-surface-lowest border border-white/8 rounded-lg flex items-center justify-between text-xs font-inter">
                         <div>
                           <p className="font-geist font-bold text-white uppercase tracking-wide text-[11px]">{h.title}</p>
-                          <p className="text-[#a1a1a1] font-mono text-[10px] mt-0.5">
+                          <p className="text-muted font-mono text-[10px] mt-0.5">
                             Libur: {h.start_date} s/d {h.end_date}
                           </p>
                         </div>
@@ -611,7 +597,7 @@ export default function Members() {
       {/* Modal Add Member */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="bg-[#201f1f] border border-white/10 rounded-xl max-w-md w-full p-6 shadow-2xl relative font-inter">
+          <div className="bg-surface-elevated border border-white/10 rounded-xl max-w-md w-full p-6 shadow-2xl relative font-inter">
             <div className="flex items-center justify-between mb-6 pb-3 border-b border-white/8">
               <h3 className="font-geist font-black text-white text-base uppercase tracking-tight">Pendaftaran Member Baru</h3>
               <button
@@ -624,7 +610,7 @@ export default function Members() {
 
             <form onSubmit={handleAddMember} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-1 font-geist">
+                <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-1 font-geist">
                   Nama Lengkap *
                 </label>
                 <input
@@ -633,12 +619,12 @@ export default function Members() {
                   value={newMember.nama}
                   onChange={(e) => setNewMember({ ...newMember, nama: e.target.value })}
                   placeholder="Nama member"
-                  className="w-full bg-[#0e0e0e] border border-white/8 text-white rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-white/30 font-inter placeholder:text-neutral-600"
+                  className="w-full bg-surface-lowest border border-white/8 text-white rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-white/30 font-inter placeholder:text-neutral-600"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-1 font-geist">
+                <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-1 font-geist">
                   Nomor HP (WhatsApp)
                 </label>
                 <input
@@ -646,12 +632,12 @@ export default function Members() {
                   value={newMember.no_hp}
                   onChange={(e) => setNewMember({ ...newMember, no_hp: e.target.value })}
                   placeholder="08123456789"
-                  className="w-full bg-[#0e0e0e] border border-white/8 text-white rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-white/30 font-inter placeholder:text-neutral-600 font-mono"
+                  className="w-full bg-surface-lowest border border-white/8 text-white rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-white/30 font-inter placeholder:text-neutral-600 font-mono"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-1 font-geist">
+                <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-1 font-geist">
                   Email Notifikasi
                 </label>
                 <input
@@ -659,18 +645,18 @@ export default function Members() {
                   value={newMember.email}
                   onChange={(e) => setNewMember({ ...newMember, email: e.target.value })}
                   placeholder="email@member.com"
-                  className="w-full bg-[#0e0e0e] border border-white/8 text-white rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-white/30 font-inter placeholder:text-neutral-600"
+                  className="w-full bg-surface-lowest border border-white/8 text-white rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-white/30 font-inter placeholder:text-neutral-600"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-1 font-geist">
+                <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-1 font-geist">
                   Pilihan Tipe Tarif
                 </label>
                 <select
                   value={newMember.tipe_tarif}
                   onChange={(e) => setNewMember({ ...newMember, tipe_tarif: e.target.value })}
-                  className="w-full bg-[#0e0e0e] border border-white/8 text-white rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-white/30 font-inter"
+                  className="w-full bg-surface-lowest border border-white/8 text-white rounded-lg py-2 px-3 text-sm focus:outline-none focus:border-white/30 font-inter"
                 >
                   <option value="pelajar">Pelajar / Mahasiswa — Rp 130.000 / bln</option>
                   <option value="karyawan">Karyawan / Umum — Rp 150.000 / bln</option>
@@ -678,7 +664,7 @@ export default function Members() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-2 font-geist">
+                <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2 font-geist">
                   Metode Pembayaran Pertama
                 </label>
                 <div className="grid grid-cols-2 gap-3">
@@ -687,8 +673,8 @@ export default function Members() {
                     onClick={() => setMetodeBayar('qris')}
                     className={`py-2 px-3 rounded-lg border text-[10px] font-bold font-geist uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       metodeBayar === 'qris'
-                        ? 'bg-white text-[#131313] border-white'
-                        : 'bg-[#0e0e0e] text-[#a1a1a1] border-white/8 hover:text-white'
+                        ? 'bg-white text-canvas border-white'
+                        : 'bg-surface-lowest text-muted border-white/8 hover:text-white'
                     }`}
                   >
                     <RiQrCodeLine className="w-4 h-4" /> QRIS Statis
@@ -699,8 +685,8 @@ export default function Members() {
                     onClick={() => setMetodeBayar('tunai')}
                     className={`py-2 px-3 rounded-lg border text-[10px] font-bold font-geist uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       metodeBayar === 'tunai'
-                        ? 'bg-white text-[#131313] border-white'
-                        : 'bg-[#0e0e0e] text-[#a1a1a1] border-white/8 hover:text-white'
+                        ? 'bg-white text-canvas border-white'
+                        : 'bg-surface-lowest text-muted border-white/8 hover:text-white'
                     }`}
                   >
                     <RiBankCardLine className="w-4 h-4" /> Tunai / Cash
@@ -711,7 +697,7 @@ export default function Members() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-white hover:bg-[#e5e5e5] text-[#131313] font-bold py-2.5 rounded-lg transition-all shadow-md mt-2 cursor-pointer font-geist uppercase tracking-wider text-xs"
+                className="w-full bg-white hover:bg-[#e5e5e5] text-canvas font-bold py-2.5 rounded-lg transition-all shadow-md mt-2 cursor-pointer font-geist uppercase tracking-wider text-xs"
               >
                 {submitting ? 'Mendaftarkan...' : 'Daftarkan Member'}
               </button>
@@ -723,11 +709,11 @@ export default function Members() {
       {/* Modal Renew Member */}
       {showRenewModal && selectedMember && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="bg-[#201f1f] border border-white/10 rounded-xl max-w-md w-full p-6 shadow-2xl relative font-inter">
+          <div className="bg-surface-elevated border border-white/10 rounded-xl max-w-md w-full p-6 shadow-2xl relative font-inter">
             <div className="flex items-center justify-between mb-6 pb-3 border-b border-white/8">
               <div>
                 <h3 className="font-geist font-black text-white text-base uppercase tracking-tight">Perpanjangan Membership</h3>
-                <p className="text-xs text-[#a1a1a1] font-mono mt-0.5">{selectedMember.nama}</p>
+                <p className="text-xs text-muted font-mono mt-0.5">{selectedMember.nama}</p>
               </div>
               <button
                 onClick={() => setShowRenewModal(false)}
@@ -738,13 +724,13 @@ export default function Members() {
             </div>
 
             <form onSubmit={handleRenewMember} className="space-y-4">
-              <div className="p-4 bg-[#0e0e0e] border border-white/8 rounded-lg space-y-2 text-xs font-mono">
+              <div className="p-4 bg-surface-lowest border border-white/8 rounded-lg space-y-2 text-xs font-mono">
                 <div className="flex justify-between">
-                  <span className="text-[#a1a1a1]">Tipe Tarif:</span>
+                  <span className="text-muted">Tipe Tarif:</span>
                   <span className="font-semibold text-white capitalize">{selectedMember.tipe_tarif}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#a1a1a1]">Total Pembayaran:</span>
+                  <span className="text-muted">Total Pembayaran:</span>
                   <span className="font-bold text-white text-sm">
                     Rp{' '}
                     {(selectedMember.tipe_tarif === 'pelajar' ? 130000 : 150000).toLocaleString(
@@ -756,7 +742,7 @@ export default function Members() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-2 font-geist">
+                <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2 font-geist">
                   Metode Pembayaran
                 </label>
                 <div className="grid grid-cols-2 gap-3">
@@ -765,8 +751,8 @@ export default function Members() {
                     onClick={() => setMetodeBayar('qris')}
                     className={`py-2.5 px-3 rounded-lg border text-[10px] font-bold font-geist uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       metodeBayar === 'qris'
-                        ? 'bg-white text-[#131313] border-white'
-                        : 'bg-[#0e0e0e] text-[#a1a1a1] border-white/8 hover:text-white'
+                        ? 'bg-white text-canvas border-white'
+                        : 'bg-surface-lowest text-muted border-white/8 hover:text-white'
                     }`}
                   >
                     <RiQrCodeLine className="w-4 h-4" /> QRIS Statis
@@ -777,8 +763,8 @@ export default function Members() {
                     onClick={() => setMetodeBayar('tunai')}
                     className={`py-2.5 px-3 rounded-lg border text-[10px] font-bold font-geist uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-all ${
                       metodeBayar === 'tunai'
-                        ? 'bg-white text-[#131313] border-white'
-                        : 'bg-[#0e0e0e] text-[#a1a1a1] border-white/8 hover:text-white'
+                        ? 'bg-white text-canvas border-white'
+                        : 'bg-surface-lowest text-muted border-white/8 hover:text-white'
                     }`}
                   >
                     <RiBankCardLine className="w-4 h-4" /> Tunai / Cash
@@ -789,7 +775,7 @@ export default function Members() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-white hover:bg-[#e5e5e5] text-[#131313] font-bold py-2.5 rounded-lg transition-all shadow-md mt-2 cursor-pointer font-geist uppercase tracking-wider text-xs"
+                className="w-full bg-white hover:bg-[#e5e5e5] text-canvas font-bold py-2.5 rounded-lg transition-all shadow-md mt-2 cursor-pointer font-geist uppercase tracking-wider text-xs"
               >
                 {submitting ? 'Memproses...' : 'Konfirmasi Perpanjangan'}
               </button>

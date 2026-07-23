@@ -50,6 +50,14 @@
   --color-on-background: #e5e2e1;
   --color-surface-variant: #353534;
 
+  --color-canvas: #131313;
+  --color-surface-card: #262626;
+  --color-surface-elevated: #201f1f;
+  --color-surface-lowest: #0e0e0e;
+  --color-ink: #e5e2e1;
+  --color-muted: #a1a1a1;
+  --color-muted-soft: #6b6b6b;
+
   --font-geist: "Geist", sans-serif;
   --font-inter: "Inter", sans-serif;
 
@@ -63,8 +71,8 @@
 @layer base {
   body {
     font-family: var(--font-inter);
-    background-color: #131313;
-    color: #e5e2e1;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     min-height: 100vh;
     overflow-x: hidden;
   }

@@ -117,18 +117,18 @@ export default function Dashboard() {
 
 
   return (
-    <div className="min-h-screen bg-[#131313] text-[#e5e2e1] flex flex-col font-inter">
+    <div className="min-h-screen bg-canvas text-ink flex flex-col font-inter">
       <Navbar />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-extrabold text-[#fafafa] tracking-tight uppercase font-geist">Dashboard Overview</h1>
-            <p className="text-[#a1a1a1] text-xs font-inter mt-1">Sistem Digital Fitness Management Portal</p>
+            <h1 className="text-2xl font-extrabold text-white tracking-tight uppercase font-geist">Dashboard Overview</h1>
+            <p className="text-muted text-xs font-inter mt-1">Sistem Digital Fitness Management Portal</p>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 text-[10px] font-semibold font-geist uppercase tracking-wider px-3 py-1.5 rounded-lg border border-white/8 bg-[#0e0e0e]/50">
+            <div className="flex items-center gap-2 text-[10px] font-semibold font-geist uppercase tracking-wider px-3 py-1.5 rounded-lg border border-white/8 bg-surface-lowest/50">
               {supabaseStatus === 'checking' && (
                 <span className="text-amber-400 flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
@@ -151,7 +151,7 @@ export default function Dashboard() {
 
             <Link
               to="/checkin"
-              className="bg-white hover:bg-[#e5e5e5] text-[#131313] text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-md flex items-center gap-2 font-geist uppercase tracking-wider"
+              className="bg-white hover:bg-[#e5e5e5] text-canvas text-xs font-bold px-4 py-2.5 rounded-lg transition-all shadow-md flex items-center gap-2 font-geist uppercase tracking-wider"
             >
               <span>Form Check-in</span>
               <RiArrowRightLine className="w-3.5 h-3.5" />
@@ -161,94 +161,94 @@ export default function Dashboard() {
 
         {/* Metric Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6">
+          <div className="bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[#a1a1a1] text-[10px] font-bold uppercase tracking-wider font-geist">
+              <span className="text-muted text-[10px] font-bold uppercase tracking-wider font-geist">
                 Daily Visits
               </span>
-              <RiPulseLine className="w-4 h-4 text-[#a1a1a1]" />
+              <RiPulseLine className="w-4 h-4 text-muted" />
             </div>
             <div className="text-3xl font-black text-white mb-1 font-geist">{stats.todayVisits}</div>
-            <p className="text-xs text-[#a1a1a1]">
+            <p className="text-xs text-muted">
               Member: <strong className="text-white font-semibold">{stats.memberVisits}</strong> | Non: <strong className="text-white font-semibold">{stats.nonMemberVisits}</strong>
             </p>
           </div>
 
-          <div className="bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6">
+          <div className="bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[#a1a1a1] text-[10px] font-bold uppercase tracking-wider font-geist">
+              <span className="text-muted text-[10px] font-bold uppercase tracking-wider font-geist">
                 Active Members
               </span>
-              <RiGroupLine className="w-4 h-4 text-[#a1a1a1]" />
+              <RiGroupLine className="w-4 h-4 text-muted" />
             </div>
             <div className="text-3xl font-black text-white mb-1 font-geist">{stats.activeMembers}</div>
-            <p className="text-xs text-[#a1a1a1]">
-              Expired (H-3): <strong className="text-[#fafafa] font-semibold">{stats.expiringMembersCount}</strong>
+            <p className="text-xs text-muted">
+              Expired (H-3): <strong className="text-white font-semibold">{stats.expiringMembersCount}</strong>
             </p>
           </div>
 
-          <div className="bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6">
+          <div className="bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[#a1a1a1] text-[10px] font-bold uppercase tracking-wider font-geist">
+              <span className="text-muted text-[10px] font-bold uppercase tracking-wider font-geist">
                 Hari Ini
               </span>
-              <RiBankCardLine className="w-4 h-4 text-[#a1a1a1]" />
+              <RiBankCardLine className="w-4 h-4 text-muted" />
             </div>
             <div className="text-2xl font-extrabold text-white mb-1 font-geist">
               Rp {stats.todayIncome.toLocaleString('id-ID')}
             </div>
-            <p className="text-xs text-[#a1a1a1]">Visitor + perpanjang</p>
+            <p className="text-xs text-muted">Visitor + perpanjang</p>
           </div>
 
-          <div className="bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6">
+          <div className="bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[#a1a1a1] text-[10px] font-bold uppercase tracking-wider font-geist">
+              <span className="text-muted text-[10px] font-bold uppercase tracking-wider font-geist">
                 Bulan Ini
               </span>
-              <RiBankCardLine className="w-4 h-4 text-[#a1a1a1]" />
+              <RiBankCardLine className="w-4 h-4 text-muted" />
             </div>
             <div className="text-2xl font-extrabold text-white mb-1 font-geist">
               Rp {stats.monthIncome.toLocaleString('id-ID')}
             </div>
-            <p className="text-xs text-[#a1a1a1]">Akumulasi transaksi</p>
+            <p className="text-xs text-muted">Akumulasi transaksi</p>
           </div>
         </div>
 
         {/* Real-time Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Expiring Members Warning Section */}
-          <div className="lg:col-span-6 bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6 shadow-xl">
+          <div className="lg:col-span-6 bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6 shadow-xl">
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/8">
               <h3 className="font-geist font-bold text-white text-xs uppercase tracking-wider flex items-center gap-2">
                 <RiAlertLine className="w-4 h-4 text-white" />
                 Masa Aktif Hampir Habis (H-3)
               </h3>
-              <span className="text-[10px] font-bold bg-white/5 border border-white/8 text-[#fafafa] px-2.5 py-1 rounded-full uppercase tracking-wider">
+              <span className="text-[10px] font-bold bg-white/5 border border-white/8 text-white px-2.5 py-1 rounded-full uppercase tracking-wider">
                 {expiringMembers.length} Member
               </span>
             </div>
 
             <div className="space-y-3 max-h-[350px] overflow-y-auto pr-1">
               {expiringMembers.length === 0 ? (
-                <div className="text-center py-8 text-[#a1a1a1] text-xs font-mono">
+                <div className="text-center py-8 text-muted text-xs font-mono">
                   Tidak ada member yang akan expired dalam 3 hari ke depan.
                 </div>
               ) : (
                 expiringMembers.map((m) => (
                   <div
                     key={m.id}
-                    className="p-3.5 bg-[#0e0e0e] border border-white/8 rounded-lg flex items-center justify-between"
+                    className="p-3.5 bg-surface-lowest border border-white/8 rounded-lg flex items-center justify-between"
                   >
                     <div>
                       <h4 className="font-geist font-bold text-white text-sm uppercase tracking-wide">{m.nama}</h4>
-                      <p className="text-xs text-[#a1a1a1] mt-0.5 font-mono">
+                      <p className="text-xs text-muted mt-0.5 font-mono">
                         No HP: {m.no_hp || '-'} | Due: {m.tanggal_jatuh_tempo}
                       </p>
                     </div>
 
                     <Link
                       to="/members"
-                      className="text-[10px] text-[#fafafa] font-geist font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
+                      className="text-[10px] text-white font-geist font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
                     >
                       Perpanjang
                     </Link>
@@ -259,27 +259,27 @@ export default function Dashboard() {
           </div>
 
           {/* Today's Stream */}
-          <div className="lg:col-span-6 bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6 shadow-xl">
+          <div className="lg:col-span-6 bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-6 shadow-xl">
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/8">
               <h3 className="font-geist font-bold text-white text-xs uppercase tracking-wider flex items-center gap-2">
                 <RiTimeLine className="w-4 h-4 text-white" />
                 Kunjungan Hari Ini
               </h3>
-              <span className="text-[10px] font-bold bg-white/5 border border-white/8 text-[#fafafa] px-2.5 py-1 rounded-full uppercase tracking-wider">
+              <span className="text-[10px] font-bold bg-white/5 border border-white/8 text-white px-2.5 py-1 rounded-full uppercase tracking-wider">
                 {todayCheckins.length} Kunjungan
               </span>
             </div>
 
             <div className="space-y-3 max-h-[350px] overflow-y-auto pr-1">
               {todayCheckins.length === 0 ? (
-                <div className="text-center py-8 text-[#a1a1a1] text-xs font-mono">
+                <div className="text-center py-8 text-muted text-xs font-mono">
                   Belum ada kunjungan hari ini.
                 </div>
               ) : (
                 todayCheckins.map((item) => (
                   <div
                     key={item.id}
-                    className="p-3.5 bg-[#0e0e0e] border border-white/8 rounded-lg flex items-center justify-between"
+                    className="p-3.5 bg-surface-lowest border border-white/8 rounded-lg flex items-center justify-between"
                   >
                     <div>
                       <div className="flex items-center gap-2">
@@ -288,13 +288,13 @@ export default function Dashboard() {
                           className={`text-[9px] font-bold font-geist uppercase px-2 py-0.5 rounded border ${
                             item.tipe === 'member'
                               ? 'bg-white/10 text-white border-white/20'
-                              : 'bg-white/5 text-[#a1a1a1] border-white/10'
+                              : 'bg-white/5 text-muted border-white/10'
                           }`}
                         >
                           {item.tipe}
                         </span>
                       </div>
-                      <p className="text-[10px] text-[#a1a1a1] font-mono mt-1">
+                      <p className="text-[10px] text-muted font-mono mt-1">
                         {new Date(item.waktu_checkin).toLocaleTimeString('id-ID', {
                           hour: '2-digit',
                           minute: '2-digit',
@@ -319,7 +319,7 @@ export default function Dashboard() {
                       {item.tipe === 'non-member' && item.status_bayar === 'belum_bayar' && (
                         <button
                           onClick={() => handleApprovePayment(item.id)}
-                          className="text-[9px] font-bold font-geist uppercase bg-white text-[#131313] px-2.5 py-1 rounded border border-white hover:bg-[#e5e5e5] transition-all cursor-pointer"
+                          className="text-[9px] font-bold font-geist uppercase bg-white text-canvas px-2.5 py-1 rounded border border-white hover:bg-[#e5e5e5] transition-all cursor-pointer"
                         >
                           Approve
                         </button>

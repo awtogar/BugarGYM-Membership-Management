@@ -81,7 +81,7 @@ const SignaturePad = forwardRef(function SignaturePad({ penColor = '#ffffff' }, 
       onTouchStart={startDrawing}
       onTouchMove={draw}
       onTouchEnd={stopDrawing}
-      className="w-full h-36 bg-[#0e0e0e] border border-white/8 rounded-lg cursor-crosshair touch-none"
+      className="w-full h-36 bg-surface-lowest border border-white/8 rounded-lg cursor-crosshair touch-none"
     />
   )
 })

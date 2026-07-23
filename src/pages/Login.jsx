@@ -38,14 +38,14 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#131313] p-4 font-inter gap-4">
-      <div className="max-w-md w-full bg-[#262626]/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-8 shadow-2xl">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-canvas p-4 font-inter gap-4">
+      <div className="max-w-md w-full bg-surface-card/70 backdrop-blur-md border border-white/8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] rounded-xl p-8 shadow-2xl">
         <div className="flex flex-col items-center mb-8">
           <div className="p-3 bg-white/5 border border-white/10 rounded-lg text-white mb-3">
             <RiPulseLine className="w-6 h-6" />
           </div>
           <h1 className="text-xl font-extrabold text-white tracking-tight uppercase font-geist">BugarGym Admin</h1>
-          <p className="text-[#a1a1a1] text-xs mt-1">Sistem Digital Fitness Management Portal</p>
+          <p className="text-muted text-xs mt-1">Sistem Digital Fitness Management Portal</p>
         </div>
 
         {error && (
@@ -57,7 +57,7 @@ export default function Login() {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-2 font-geist">
+            <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2 font-geist">
               Email Address
             </label>
             <div className="relative">
@@ -68,13 +68,13 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@bugargym.com"
-                className="w-full bg-[#0e0e0e] border border-white/8 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-white/30 transition-all font-inter placeholder:text-neutral-600"
+                className="w-full bg-surface-lowest border border-white/8 text-white rounded-lg py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-white/30 transition-all font-inter placeholder:text-neutral-600"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#a1a1a1] uppercase tracking-wider mb-2 font-geist">
+            <label className="block text-xs font-semibold text-muted uppercase tracking-wider mb-2 font-geist">
               Password
             </label>
             <div className="relative">
@@ -85,7 +85,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#0e0e0e] border border-white/8 text-white rounded-lg py-2.5 pl-10 pr-10 text-sm focus:outline-none focus:border-white/30 transition-all font-inter placeholder:text-neutral-600"
+                className="w-full bg-surface-lowest border border-white/8 text-white rounded-lg py-2.5 pl-10 pr-10 text-sm focus:outline-none focus:border-white/30 transition-all font-inter placeholder:text-neutral-600"
               />
               <button
                 type="button"
@@ -105,7 +105,7 @@ export default function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#fafafa] hover:bg-[#e5e5e5] text-[#131313] font-bold py-2.5 rounded-lg transition-all shadow-md disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer font-geist uppercase tracking-wider text-xs"
+            className="w-full bg-white hover:bg-[#e5e5e5] text-canvas font-bold py-2.5 rounded-lg transition-all shadow-md disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer font-geist uppercase tracking-wider text-xs"
           >
             {loading ? 'Authenticating...' : 'Sign In'}
           </button>
@@ -113,7 +113,7 @@ export default function Login() {
       </div>
 
       {/* dummy banner, remove after development */}
-      <div className="max-w-md w-full p-4 bg-[#262626]/70 justify-center items-center text-center backdrop-blur-md5 rounded-lg text-xs font-mono text-white">
+      <div className="max-w-md w-full p-4 bg-surface-card/70 justify-center items-center text-center backdrop-blur-md5 rounded-lg text-xs font-mono text-white">
         <p className="font-semibold uppercase tracking-wider text-[10px] mb-1 text-white">Dummy Account (Testing)</p>
         <p>Email: bugargym@gmail.com</p>
         <p>Password: bugar123</p>

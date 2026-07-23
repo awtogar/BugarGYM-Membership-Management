@@ -17,9 +17,8 @@ export default function Landing() {
   const { user, logout } = useAuth();
 
   return (
-    <div className="min-h-screen bg-[#131313] text-[#e5e2e1] flex flex-col font-inter">
-      {/* Top Navigation */}
-      <header className="border-b border-white/8 bg-[#131313]/90 backdrop-blur-md sticky top-0 z-50">
+    <div className="min-h-screen bg-canvas text-ink flex flex-col font-inter">
+      <header className="border-b border-white/8 bg-canvas/90 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
             <span className="font-geist font-extrabold text-xl text-white tracking-tight uppercase">
@@ -29,13 +28,13 @@ export default function Landing() {
 
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#Fasilitas" className="text-xs font-semibold text-[#a1a1a1] hover:text-[#fafafa] uppercase tracking-wider transition-colors duration-200">
+            <a href="#Fasilitas" className="text-xs font-semibold text-muted hover:text-[#fafafa] uppercase tracking-wider transition-colors duration-200">
               Fasilitas
             </a>
-            <a href="#Harga" className="text-xs font-semibold text-[#a1a1a1] hover:text-[#fafafa] uppercase tracking-wider transition-colors duration-200">
+            <a href="#Harga" className="text-xs font-semibold text-muted hover:text-[#fafafa] uppercase tracking-wider transition-colors duration-200">
               Harga
             </a>
-            <a href="#TentangKami" className="text-xs font-semibold text-[#a1a1a1] hover:text-[#fafafa] uppercase tracking-wider transition-colors duration-200">
+            <a href="#TentangKami" className="text-xs font-semibold text-muted hover:text-[#fafafa] uppercase tracking-wider transition-colors duration-200">
               Tentang Kami
             </a>
           </nav>
@@ -46,14 +45,14 @@ export default function Landing() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/admin"
-                  className="bg-white hover:bg-[#e5e5e5] text-[#131313] text-xs font-bold px-5 py-2.5 rounded-md transition-all font-geist uppercase tracking-wider flex items-center gap-2"
+                  className="bg-white hover:bg-[#e5e5e5] text-canvas text-xs font-bold px-5 py-2.5 rounded-md transition-all font-geist uppercase tracking-wider flex items-center gap-2"
                 >
                   <RiDashboardLine className="w-3.5 h-3.5" />
                   <span>Dashboard</span>
                 </Link>
                 <button
                   onClick={logout}
-                  className="text-xs font-semibold text-[#a1a1a1] hover:text-[#fafafa] px-3 py-2 transition-colors uppercase tracking-wider font-geist"
+                  className="text-xs font-semibold text-muted hover:text-[#fafafa] px-3 py-2 transition-colors uppercase tracking-wider font-geist"
                 >
                   Keluar
                 </button>
@@ -62,14 +61,14 @@ export default function Landing() {
               <div className="flex items-center gap-4">
                 <Link
                   to="/checkin-self"
-                  className="text-xs font-semibold text-[#a1a1a1] hover:text-[#fafafa] uppercase tracking-wider transition-colors duration-200"
+                  className="text-xs font-semibold text-muted hover:text-[#fafafa] uppercase tracking-wider transition-colors duration-200"
                 >
                   Check-In
                 </Link>
-                <span className="text-xs text-[#6b6b6b] uppercase tracking-wider">atau</span>
+                <span className="text-xs text-muted-soft uppercase tracking-wider">atau</span>
                 <Link
                   to="/login"
-                  className="bg-white hover:bg-[#e5e5e5] text-[#131313] text-xs font-bold px-5 py-2.5 rounded-md transition-all font-geist uppercase tracking-wider"
+                  className="bg-white hover:bg-[#e5e5e5] text-canvas text-xs font-bold px-5 py-2.5 rounded-md transition-all font-geist uppercase tracking-wider"
                 >
                   Masuk
                 </Link>
@@ -94,14 +93,14 @@ export default function Landing() {
               Mulai Kebugaran Anda Bareng Komunitas yang Suportif
             </h1>
 
-            <p className="text-[#a1a1a1] text-sm sm:text-base leading-relaxed font-inter mb-8 max-w-xl">
+            <p className="text-muted text-sm sm:text-base leading-relaxed font-inter mb-8 max-w-xl">
               Tempat latihan santai tanpa tekanan. Peralatan lengkap untuk latihan dasar, dan teman-teman gym yang selalu siap bantu kalau Anda butuh arahan.
             </p>
 
             <div className="flex flex-row items-center gap-4 w-full sm:w-auto">
               <a
                 href="#Harga"
-                className="bg-white hover:bg-[#e5e5e5] text-[#131313] text-xs font-bold px-6 py-3.5 rounded-md transition-all font-geist uppercase tracking-wider text-center shadow-lg shadow-white/5"
+                className="bg-white hover:bg-[#e5e5e5] text-canvas text-xs font-bold px-6 py-3.5 rounded-md transition-all font-geist uppercase tracking-wider text-center shadow-lg shadow-white/5"
               >
                 Gabung Member
               </a>
@@ -143,7 +142,7 @@ export default function Landing() {
               alt="Weightlifter"
               className="w-full h-full object-cover filter grayscale contrast-125 brightness-75 absolute inset-0 transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-black/40 to-transparent z-0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-lowest via-black/40 to-transparent z-0" />
 
             <div className="relative z-10">
               <span className="inline-flex items-center text-[10px] font-bold text-white bg-white/10 border border-white/20 px-2.5 py-1 rounded-md uppercase tracking-wider w-fit mb-4 font-geist">
@@ -152,7 +151,7 @@ export default function Landing() {
               <h3 className="text-2xl font-bold text-white uppercase tracking-tight font-geist mb-2">
                 Latihan Mu Pasti Dibantu
               </h3>
-              <p className="text-[#a1a1a1] text-xs sm:text-sm font-inter leading-relaxed max-w-md">
+              <p className="text-muted text-xs sm:text-sm font-inter leading-relaxed max-w-md">
                 Cocok buat pemula sampai yang udah rutin. Nggak ada tekanan buat tampil sempurna.
               </p>
             </div>
@@ -167,7 +166,7 @@ export default function Landing() {
                 alt="Group workout class"
                 className="w-full h-full object-cover filter brightness-[0.7] contrast-110 absolute inset-0 transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-black/30 to-transparent z-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface-lowest via-black/30 to-transparent z-0" />
 
               <div className="absolute top-6 right-6 z-10 text-[9px] font-mono text-zinc-400 uppercase tracking-wider">
                 BUGAR GYM - ELITE PERFORMANCE
@@ -240,62 +239,65 @@ export default function Landing() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
           {/* Card 1: Kios 6-Digit */}
-          <div className="bg-[#1c1b1b]/50 border border-white/8 p-8 rounded-xl flex flex-col items-start">
+          <div className="bg-surface-elevated/50 border border-white/8 p-8 rounded-xl flex flex-col items-start">
             <div className="p-3 bg-white/5 border border-white/8 rounded-lg text-white mb-6">
               <RiQrCodeLine className="w-5 h-5" />
             </div>
             <h3 className="text-base font-bold text-white uppercase tracking-wide mb-3 font-geist">
               Kios 6-Digit
             </h3>
-            <p className="text-[#a1a1a1] text-xs leading-relaxed font-inter">
-              Antarmuka mandiri untuk anggota. Check-in dalam hitungan detik menggunakan kode PIN unik tanpa intervensi staf.
+            <p className="text-muted text-xs leading-relaxed font-inter">
+              Masuk gym lebih gampang. Cukup ketik kode unik 6-digit Anda di kios resepsionis untuk langsung latihan.
             </p>
           </div>
 
-          {/* Card 2: Kompensasi Otomatis */}
-          <div className="bg-[#1c1b1b]/50 border border-white/8 p-8 rounded-xl flex flex-col items-start">
-            <div className="p-3 bg-white/5 border border-white/8 rounded-lg text-white mb-6">
-              <RiRefreshLine className="w-5 h-5" />
-            </div>
-            <h3 className="text-base font-bold text-white uppercase tracking-wide mb-3 font-geist">
-              Kompensasi Otomatis
-            </h3>
-            <p className="text-[#a1a1a1] text-xs leading-relaxed font-inter">
-              Sistem secara cerdas menyesuaikan masa berlaku keanggotaan saat hari libur nasional atau penutupan darurat.
-            </p>
-          </div>
-
-          {/* Card 3: Resepsionis Cepat */}
-          <div className="bg-[#1c1b1b]/50 border border-white/8 p-8 rounded-xl flex flex-col items-start">
+          {/* Card 2: Autopilot Tracking */}
+          <div className="bg-surface-elevated/50 border border-white/8 p-8 rounded-xl flex flex-col items-start">
             <div className="p-3 bg-white/5 border border-white/8 rounded-lg text-white mb-6">
               <RiPulseLine className="w-5 h-5" />
             </div>
             <h3 className="text-base font-bold text-white uppercase tracking-wide mb-3 font-geist">
-              Resepsionis Cepat
+              Autopilot Tracking
             </h3>
-            <p className="text-[#a1a1a1] text-xs leading-relaxed font-inter">
-              Alur kerja pendaftaran anggota baru yang dioptimalkan untuk meminimalkan waktu antrean pada jam sibuk.
+            <p className="text-muted text-xs leading-relaxed font-inter">
+              Catatan kunjungan otomatis tersimpan di sistem. Nggak perlu repot tanda tangan manual setiap datang.
+            </p>
+          </div>
+
+          {/* Card 3: Dashboard Real-time */}
+          <div className="bg-surface-elevated/50 border border-white/8 p-8 rounded-xl flex flex-col items-start">
+            <div className="p-3 bg-white/5 border border-white/8 rounded-lg text-white mb-6">
+              <RiCodeLine className="w-5 h-5" />
+            </div>
+            <h3 className="text-base font-bold text-white uppercase tracking-wide mb-3 font-geist">
+              Dashboard Real-time
+            </h3>
+            <p className="text-muted text-xs leading-relaxed font-inter">
+              Admin bisa lihat siapa saja yang sedang aktif latihan hari ini lewat monitor live dashboard.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Pricing / Daftar Harga Section */}
+      {/* Pricing Section */}
       <section id="Harga" className="py-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/8">
-        <div className="text-center mb-16">
-          <h2 className="text-2xl font-extrabold text-white tracking-tight uppercase font-geist">
-            Daftar Harga
+        <div className="max-w-3xl mx-auto text-center mb-16">
+          <h2 className="text-xs font-bold text-white tracking-widest uppercase font-geist">
+            Harga Membership
           </h2>
-          <p className="text-[#a1a1a1] text-sm mt-3 font-inter max-w-2xl mx-auto">
+          <h3 className="text-3xl sm:text-4xl font-extrabold text-white uppercase tracking-tight font-geist mt-3">
+            Pilih Paket Latihan Anda
+          </h3>
+          <p className="text-muted text-sm mt-3 font-inter max-w-2xl mx-auto">
             Choose your level of commitment. Every membership grants access to our world-class facilities and recovery lounge.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
           {/* Card 1: Visitor */}
-          <div className="bg-[#1c1b1b] border border-white/8 p-8 rounded-xl flex flex-col justify-between">
+          <div className="bg-surface-elevated border border-white/8 p-8 rounded-xl flex flex-col justify-between">
             <div>
-              <span className="text-[#a1a1a1] text-xs font-bold uppercase tracking-wider font-geist">
+              <span className="text-muted text-xs font-bold uppercase tracking-wider font-geist">
                 Visitor
               </span>
               <div className="mt-4 flex items-baseline gap-1">
@@ -323,7 +325,7 @@ export default function Landing() {
             </div>
             <a
               href="#cta"
-              className="mt-8 w-full bg-[#262626] border border-white/8 hover:bg-[#323232] text-zinc-300 font-semibold py-3 rounded-md text-xs text-center font-geist uppercase tracking-wider transition-all block"
+              className="mt-8 w-full bg-surface-card border border-white/8 hover:bg-zinc-700 text-zinc-300 font-semibold py-3 rounded-md text-xs text-center font-geist uppercase tracking-wider transition-all block"
             >
               Select Tier
             </a>
@@ -331,7 +333,7 @@ export default function Landing() {
 
           {/* Card 2: Membership Pelajar (Featured - White background) */}
           <div className="bg-white border-2 border-white shadow-2xl p-8 rounded-xl flex flex-col justify-between relative lg:-translate-y-2 lg:scale-105 z-10">
-            <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#131313] text-white text-[9px] font-black uppercase px-3 py-1.5 rounded-md tracking-wider font-geist">
+            <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-canvas text-white text-[9px] font-black uppercase px-3 py-1.5 rounded-md tracking-wider font-geist">
               Recommended
             </span>
             <div>
@@ -363,16 +365,16 @@ export default function Landing() {
             </div>
             <a
               href="#cta"
-              className="mt-8 w-full bg-[#131313] hover:bg-[#242424] text-white font-bold py-3.5 rounded-md text-xs text-center font-geist uppercase tracking-wider transition-all block shadow-lg"
+              className="mt-8 w-full bg-canvas hover:bg-zinc-800 text-white font-bold py-3.5 rounded-md text-xs text-center font-geist uppercase tracking-wider transition-all block shadow-lg"
             >
               Join Elite
             </a>
           </div>
 
           {/* Card 3: Membership Umum */}
-          <div className="bg-[#1c1b1b] border border-white/8 p-8 rounded-xl flex flex-col justify-between">
+          <div className="bg-surface-elevated border border-white/8 p-8 rounded-xl flex flex-col justify-between">
             <div>
-              <span className="text-[#a1a1a1] text-xs font-bold uppercase tracking-wider font-geist">
+              <span className="text-muted text-xs font-bold uppercase tracking-wider font-geist">
                 Membership Umum
               </span>
               <div className="mt-4 flex items-baseline gap-1">
@@ -400,7 +402,7 @@ export default function Landing() {
             </div>
             <a
               href="#cta"
-              className="mt-8 w-full bg-[#262626] border border-white/8 hover:bg-[#323232] text-zinc-300 font-semibold py-3 rounded-md text-xs text-center font-geist uppercase tracking-wider transition-all block"
+              className="mt-8 w-full bg-zinc-800 border border-white/8 hover:bg-zinc-700 text-zinc-300 font-semibold py-3 rounded-md text-xs text-center font-geist uppercase tracking-wider transition-all block"
             >
               Select Tier
             </a>
@@ -410,26 +412,26 @@ export default function Landing() {
 
       {/* CTA Section */}
       <section id="cta" className="py-20 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/8">
-        <div className="relative overflow-hidden rounded-xl border border-white/8 py-20 px-8 text-center bg-[#1c1b1b] shadow-2xl">
+        <div className="relative overflow-hidden rounded-xl border border-white/8 py-20 px-8 text-center bg-surface-elevated shadow-2xl">
           <img
             src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1200&auto=format&fit=crop"
             alt="Workout background"
             className="w-full h-full object-cover filter brightness-[0.15] contrast-100 absolute inset-0 z-0"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1c1b1b]/90 via-transparent to-[#1c1b1b]/90 pointer-events-none z-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-surface-elevated/90 via-transparent to-surface-elevated/90 pointer-events-none z-0" />
 
-          <div className="relative z-10 max-w-2xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight uppercase font-geist mb-4">
-              Yuk, Mulai Kebiasaan Sehat Bareng Kami
+          <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white uppercase tracking-tight font-geist mb-4">
+              Mulai Latihan Sekarang
             </h2>
-            <p className="text-[#a1a1a1] text-sm sm:text-base font-inter max-w-xl mx-auto mb-8">
+            <p className="text-muted text-sm sm:text-base font-inter max-w-xl mx-auto mb-8">
               Nggak perlu alat mahal atau gym mewah buat mulai. Yang penting niat, sisanya bisa dipelajari bareng-bareng di sini.
             </p>
             <a
               href="https://wa.me/628274274274?text=Halo%20Bugar%20Gym%2C%20saya%20tertarik%20untuk%20datang%20dan%20mencoba%20latihan%20di%20sini."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center bg-white hover:bg-[#e5e5e5] text-[#131313] font-bold px-8 py-3.5 rounded-full transition-all text-xs font-geist uppercase tracking-wider cursor-pointer shadow-lg"
+              className="inline-flex items-center justify-center bg-white hover:bg-[#e5e5e5] text-canvas font-bold px-8 py-3.5 rounded-full transition-all text-xs font-geist uppercase tracking-wider cursor-pointer shadow-lg"
             >
               Datang & Coba Gym
             </a>
@@ -468,7 +470,7 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer id="TentangKami" className="bg-[#0a0a0a] border-t border-white/8 py-16 mt-auto">
+      <footer id="TentangKami" className="bg-surface-lowest border-t border-white/8 py-16 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12">
             {/* Col 1: Brand Info */}

@@ -1,6 +1,4 @@
-/**
- * Generate a random 6-character uppercase unique code for member self check-in
- */
+
 export function generateMemberCode() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
   let code = ''
